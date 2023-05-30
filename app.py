@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import datetime
-botToken = "MTEwODQ0MzkwNzk5MTI3NzYzOQ.G49ky8.xPOl4k1PT7HL4voSm8bAnIM9HTD1tX6rZfZATk"
+botToken = "[TOKEN DISCORD BOT]"
 
 bot = commands.Bot(command_prefix=">", intents=discord.Intents.all(), description="Bot del curso IA, UMG\n Alumnos\n Bryan Paz.\n Emmanuel Cabrebra.")
 
