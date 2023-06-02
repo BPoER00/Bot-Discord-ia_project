@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
-botToken = "MTEwODQ0MzkwNzk5MTI3NzYzOQ.GFJkwR.NRo-AuCLVUye8xcryhuC8uyYqZClQqn0tQDuDY"
+botToken = "MTEwODQ0MzkwNzk5MTI3NzYzOQ.GeL5YY.T28Fvvpv-ZH0YbvzfLMDClsDeNpHc10kMvda_4"
 
 bot = commands.Bot(command_prefix=">", intents=discord.Intents.all(), description="Bot del curso IA, UMG\n Alumnos\n Bryan Paz.\n Emmanuel Cabrebra.")
 
@@ -64,10 +64,10 @@ async def res(ctx, num1: int, num2: int):
     await ctx.send("La red neuronal esta procesando...")
     historial = model.fit(xt, yt, epochs=1000, batch_size=4)
 
-    # plt.xlabel("# epoca")
-    # plt.ylabel("Magnitud de perdida")
-    # plt.plot(historial.history['loss'])
-    # plt.show()
+    plt.xlabel("# epoca")
+    plt.ylabel("Magnitud de perdida")
+    plt.plot(historial.history['loss'])
+    plt.show()
 
     xtest = np.array([[num1, num2]])
 
@@ -183,13 +183,70 @@ async def div(ctx, num1: int, num2: int):
     await ctx.send("Resultado de la division es: " + str(prediccion))
 
 @bot.command()
+async def CaF(ctx, n1: int):
+    celsius = np.array([-40, -10, 0, 8, 15, 22, 38], dtype=float)
+    fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype=float)
+
+    oculta1 = tf.keras.layers.Dense(units=3, input_shape=[1])
+    oculta2 = tf.keras.layers.Dense(units=3)
+    salida = tf.keras.layers.Dense(units=1)
+    model = tf.keras.Sequential([oculta1, oculta2, salida])
+
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(0.1),
+        loss='mean_squared_error'
+    )
+
+    await ctx.send("La red neuronal esta procesando...")
+    historial = model.fit(celsius, fahrenheit, epochs=1000, verbose=False)
+
+    plt.xlabel("# epoca")
+    plt.ylabel("Magnitud de perdida")
+    plt.plot(historial.history['loss'])
+    plt.show()
+
+    xtest = np.array([[n1]])
+    prediccion = model.predict(xtest)
+
+    await ctx.send("Resultado de la conversion de Grado Celsius a Grado Fahrenheit es: " + str(prediccion))
+
+@bot.command()
+async def FaC(ctx, n1: int):
+    celsius = np.array([-40, -10, 0, 8, 15, 22, 38], dtype=float)
+    fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype=float)
+
+    oculta1 = tf.keras.layers.Dense(units=3, input_shape=[1])
+    oculta2 = tf.keras.layers.Dense(units=3)
+    salida = tf.keras.layers.Dense(units=1)
+    model = tf.keras.Sequential([oculta1, oculta2, salida])
+
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(0.1),
+        loss='mean_squared_error'
+    )
+
+    await ctx.send("La red neuronal esta procesando...")
+    historial = model.fit(fahrenheit, celsius, epochs=1000, verbose=False)
+
+    plt.xlabel("# epoca")
+    plt.ylabel("Magnitud de perdida")
+    plt.plot(historial.history['loss'])
+    plt.show()
+
+    xtest = np.array([[n1]])
+    prediccion = model.predict(xtest)
+
+    await ctx.send("Resultado de la conversion de Grado Fahrenheit a Grado Celsius es: " + str(prediccion))
+
+@bot.command()
 async def info(ctx):
     embedform = discord.Embed(
         title=f"{ctx.guild.name}",
         description="Opciones para utilizar",
         color=discord.Color.purple()
         )
-    
+    embedform.add_field(name="Comandos de operaciones aritmeticas con redes neuronales ", value=">sum 1 1 (Realiza una Suma)\n >res 1 1 (Realiza una resta)\n >mul 1 1 (Realiza una multi)\n >div 1 1 (Realiza una division)\n")
+    embedform.add_field(name="Comandos de operaciones convertidor con redes neuronales", value=">CaF 1 (Convierte de C a F)\n >FaC 1 (Convierte de F a C)\n") 
     embedform.set_thumbnail(url="https://us.123rf.com/450wm/dxinerz/dxinerz1507/dxinerz150701509/42482050-ajustes-controles-de-imagen-de-icono-de-vector-opciones-tambi%C3%A9n-se-puede-utilizar-para-el-tel%C3%A9fono.jpg")
 
     await ctx.send(embed=embedform)
