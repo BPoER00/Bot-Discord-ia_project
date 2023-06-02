@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
-botToken = "MTEwODQ0MzkwNzk5MTI3NzYzOQ.GeL5YY.T28Fvvpv-ZH0YbvzfLMDClsDeNpHc10kMvda_4"
+botToken = "[TOKEN]"
 
 bot = commands.Bot(command_prefix=">", intents=discord.Intents.all(), description="Bot del curso IA, UMG\n Alumnos\n Bryan Paz.\n Emmanuel Cabrebra.")
 
